@@ -131,12 +131,15 @@
   #:use-module (ice-9 regex))
 
 (define-public linux-rockos
-  (let* ((version "6.6.77")
-         (commit "a09bb3e87d92ce2233a75f078cfb949c858d7f64")
+  (let* ((version "6.6.83")
+         (commit "5d8e55ae695aab5afed6acfabe14bdad12c28013")
          (base
           (customize-linux
            #:name "linux-rockos"
-           #:defconfig "eic7700_defconfig"
+           #:linux (package (inherit linux-libre-6.6)
+                            (version version))
+           #:defconfig "win2030_defconfig"
+           #:extra-version "rockos"
            #:source
            (origin
              (method git-fetch)
@@ -149,6 +152,6 @@
                (git-version version "0" commit)))
              (sha256
               (base32
-               "07m2yqg9kmcfb98wpxglpf1gd6fwszv0f9p1wjjjfslyplr37sm9")))
+               "13clchza3himyi9hd6x1bh597nyz9q3z3fqbg0j109ni9v5nr4ah")))
            #:configs '("# CONFIG_BT_HS is not set"))))
     base))
