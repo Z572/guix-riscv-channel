@@ -84,8 +84,8 @@
                                    (guix guix*)
                                    (substitute-urls
                                     (list "https://ci.z572.online"
-                                          "https://bordeaux.guix.gnu.org" ))
-                                   (build-accounts 4)
+                                          "https://bordeaux.guix.gnu.org"))
+                                   (build-accounts 12)
                                    (authorized-keys
                                     (append
                                      (list (plain-file "ci.z572.online"
