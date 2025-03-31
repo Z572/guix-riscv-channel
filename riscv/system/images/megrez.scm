@@ -62,13 +62,6 @@
                              (permit-root-login #t)
                              (allow-empty-passwords? #t)))
                    (service avahi-service-type)
-                   ;; XXX: Does it need this?
-                   (service agetty-service-type
-                            (agetty-configuration
-                             (extra-options '("-L"))
-                             (baud-rate "115200")
-                             (term "vt100")
-                             (tty "ttyS0")))
                    (service dhcp-client-service-type))
              (modify-services %base-services
                (guix-service-type config =>
