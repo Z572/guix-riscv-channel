@@ -10,6 +10,7 @@
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader u-boot)
   #:use-module (gnu services dbus)
+  #:use-module (gnu services desktop)
   #:use-module (gnu services dns)
   #:use-module (gnu services avahi)
   #:use-module (gnu services shepherd)
@@ -17,6 +18,8 @@
   #:use-module (gnu services networking)
   #:use-module (gnu image)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages terminals)
+  #:use-module (gnu packages wm)
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (gnu packages package-management)
@@ -68,7 +71,10 @@
     (initrd-modules (fold delete %base-initrd-modules
                           (list "hid-apple" "pata_acpi" "pata_atiixp" "isci")))
     (firmware '())
-    (packages (append (list cloud-utils) %base-packages))
+    (packages (append (list cloud-utils)
+                      (if (%current-target-system) (list)
+                          (list fastfetch foot sway))
+                      %base-packages))
     (services
      (append (list (service openssh-service-type
                             (openssh-configuration
@@ -77,6 +83,9 @@
                              (allow-empty-passwords? #t)))
                    (service avahi-service-type)
                    (service dhcp-client-service-type))
+             (if (%current-target-system)
+                 '()
+                 (list (service elogind-service-type)))
              (modify-services %base-services
                (guix-service-type config =>
                                   (guix-configuration
