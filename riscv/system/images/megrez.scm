@@ -61,6 +61,7 @@
                              (openssh openssh-sans-x)
                              (permit-root-login #t)
                              (allow-empty-passwords? #t)))
+                   (service avahi-service-type)
                    ;; XXX: Does it need this?
                    (service agetty-service-type
                             (agetty-configuration
@@ -87,7 +88,7 @@
   )
  )"))
                                      %default-authorized-guix-keys))
-                                   (discover? #f)
+                                   (discover? #t)
                                    (extra-options
                                     (list "-M 4" "-c 4")))))))))
 
