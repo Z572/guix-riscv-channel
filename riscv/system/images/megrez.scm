@@ -52,14 +52,7 @@
     (kernel linux-rockos)
     (kernel-arguments (list "earlycon" "clk_ignore_unused"))
     (initrd-modules (fold delete %base-initrd-modules
-                          (list "wp512"
-                                "virtio_pci"
-                                "virtio_balloon" "virtio_blk" "virtio_net"
-                                "virtio_console" "virtio-rng"
-                                "serpent_generic"
-                                "xts"
-                                "hid-generic"
-                                "usb-storage")))
+                          (list "hid-apple" "pata_acpi" "pata_atiixp" "isci")))
     (firmware '())
     (packages (append (list cloud-utils) %base-packages))
     (services

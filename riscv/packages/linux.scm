@@ -132,26 +132,39 @@
 
 (define-public linux-rockos
   (let* ((version "6.6.83")
-         (commit "5d8e55ae695aab5afed6acfabe14bdad12c28013")
-         (base
-          (customize-linux
-           #:name "linux-rockos"
-           #:linux (package (inherit linux-libre-6.6)
-                            (version version))
-           #:defconfig "win2030_defconfig"
-           #:extra-version "rockos"
-           #:source
-           (origin
-             (method git-fetch)
-             (uri (git-reference
-                   (url "https://github.com/rockos-riscv/rockos-kernel/")
-                   (commit commit)))
-             (file-name
-              (git-file-name
-               "rockos-kernel"
-               (git-version version "0" commit)))
-             (sha256
-              (base32
-               "13clchza3himyi9hd6x1bh597nyz9q3z3fqbg0j109ni9v5nr4ah")))
-           #:configs '("# CONFIG_BT_HS is not set"))))
-    base))
+         (commit "5d8e55ae695aab5afed6acfabe14bdad12c28013"))
+    (customize-linux
+     #:name "linux-rockos"
+     #:linux (package (inherit linux-libre-6.6)
+                      (version version))
+     #:defconfig "win2030_defconfig"
+     #:extra-version "rockos"
+     #:source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/rockos-riscv/rockos-kernel/")
+             (commit commit)))
+       (file-name
+        (git-file-name
+         "rockos-kernel"
+         (git-version version "0" commit)))
+       (sha256
+        (base32
+         "13clchza3himyi9hd6x1bh597nyz9q3z3fqbg0j109ni9v5nr4ah")))
+     #:configs '("CONFIG_HID_GENERIC=m"
+                 "CONFIG_USB_UAS=m"
+                 "CONFIG_CRYPTO_XTS=m"
+                 "CONFIG_CRYPTO_SERPENT=m"
+                 "CONFIG_CRYPTO_WP512=m"
+                 "CONFIG_HW_RANDOM_VIRTIO=m"
+                 "CONFIG_VIRTIO_CONSOLE=m"
+                 "CONFIG_USB_STORAGE=m"
+                 "CONFIG_VIRTIO_BLK=m"
+                 "CONFIG_VIRTIO_PCI=m"
+                 "CONFIG_VIRTIO_BALLOON=m"
+                 ;; "CONFIG_HID_APPLE=m"
+                 ;; "CONFIG_PATA_ACPI=m"
+                 ;; "CONFIG_PATA_ATIIXP=m"
+                 ;; "CONFIG_SCSI_ISCI=m"
+                 ))))
