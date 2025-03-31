@@ -74,7 +74,7 @@
                              (extra-options '("-L"))
                              (baud-rate "115200")
                              (term "vt100")
-                             (tty "ttySIF0")))
+                             (tty "ttyS0")))
                    (service dhcp-client-service-type))
              (modify-services %base-services
                (guix-service-type config =>
