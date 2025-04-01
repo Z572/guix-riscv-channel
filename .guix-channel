@@ -1,0 +1,4 @@
+(channel
+ (version 0)
+ (directory "modules")
+ (url "https://github.com/z572/guix-riscv-channel.git"))
