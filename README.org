@@ -1,0 +1,14 @@
+# -*- mode: org; -*-
+#+title: guix channel for riscv
+
+[[https://ci.z572.online/jobset/master/badge.svg?type=0]]
+
+This is a guix channel for some riscv support package.
+
+use https://ci.z572.online for substitute.
+
+More development boards will be supported in the future.
+
+We will upstream to guix what can be upstreamed to guix.
+
+*NOTE:* This channel may have binary blobs etc.
