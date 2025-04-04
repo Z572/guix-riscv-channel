@@ -68,8 +68,10 @@
                          %base-file-systems))
     (kernel linux-rockos)
     (kernel-arguments (list "earlycon" "clk_ignore_unused"))
-    (initrd-modules (fold delete %base-initrd-modules
-                          (list "hid-apple" "pata_acpi" "pata_atiixp" "isci")))
+    (initrd-modules (cons*
+                     "sd_mod"
+                     (fold delete %base-initrd-modules
+                           (list "hid-apple" "pata_acpi" "pata_atiixp" "isci"))))
     (firmware '())
     (packages (append (list cloud-utils)
                       (if (%current-target-system) (list)
