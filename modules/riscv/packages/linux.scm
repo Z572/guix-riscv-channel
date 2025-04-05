@@ -151,7 +151,12 @@
          (git-version version "0" commit)))
        (sha256
         (base32
-         "13clchza3himyi9hd6x1bh597nyz9q3z3fqbg0j109ni9v5nr4ah")))
+         "13clchza3himyi9hd6x1bh597nyz9q3z3fqbg0j109ni9v5nr4ah"))
+       (modules '((guix build utils)))
+       (snippet
+        #~(substitute* "drivers/gpu/drm/amd/amdkfd/Kconfig"
+            (("depends on DRM_AMDGPU && [(]X86_64 [|][|] ARM64 [|][|] PPC64[)]")
+             "depends on DRM_AMDGPU && (X86_64 || ARM64 || PPC64 || RISCV)"))))
      #:configs '("CONFIG_HID_GENERIC=m"
                  "CONFIG_USB_UAS=m"
                  "CONFIG_CRYPTO_XTS=m"
@@ -167,4 +172,15 @@
                  ;; "CONFIG_PATA_ACPI=m"
                  ;; "CONFIG_PATA_ATIIXP=m"
                  ;; "CONFIG_SCSI_ISCI=m"
-                 ))))
+
+                 "CONFIG_MODPROBE_PATH=\"/run/current-system/profile/bin/modprobe\""
+                 "CONFIG_FW_LOADER_USER_HELPER=y"
+                 "CONFIG_FW_LOADER_COMPRESS=y"
+                 "CONFIG_FW_LOADER_COMPRESS_ZSTD=y"
+                 "CONFIG_FW_UPLOAD=y"
+                 "CONFIG_HSA_AMD=y"
+                 "CONFIG_ZRAM=m"
+                 "CONFIG_MODULE_COMPRESS_ZSTD=y"
+                 "CONFIG_MODULE_DECOMPRESS=y"
+
+                 "CONFIG_NUMA=y"))))
