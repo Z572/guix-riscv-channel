@@ -40,19 +40,6 @@
             megrez-barebones-raw-image))
 
 
-(define guix*
-  (package/inherit guix
-    (arguments
-     (substitute-keyword-arguments (package-arguments guix)
-       ((#:parallel-build? parallel-build? #t)
-        (if (%current-target-system)
-            parallel-build?
-            #t))
-       ((#:tests? test? #f)
-        (if (%current-target-system)
-            test?
-            #f))))))
-
 (define megrez-barebones-os
   (operating-system
     (host-name "megrez")
@@ -93,7 +80,6 @@
                (guix-service-type config =>
                                   (guix-configuration
                                    (inherit config)
-                                   (guix guix*)
                                    (substitute-urls
                                     (list "https://ci.z572.online"
                                           "https://bordeaux.guix.gnu.org"))
@@ -107,8 +93,7 @@
   (q #166927E5E329B2AF7E965A4AE07403B69177EB0B8556D3467A83E0BE5E3D27F9#)
   )
  )"))
-                                     (list (file-append guix* "/share/guix/berlin.guix.gnu.org.pub")
-                                           (file-append guix* "/share/guix/bordeaux.guix.gnu.org.pub"))))
+                                     %default-authorized-guix-keys))
                                    (discover? #t)
                                    (extra-options
                                     (list "-M 4" "-c 4")))))))))
