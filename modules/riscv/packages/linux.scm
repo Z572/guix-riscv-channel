@@ -136,7 +136,8 @@
     (customize-linux
      #:name "linux-rockos"
      #:linux (package (inherit linux-libre-6.6)
-                      (version version))
+                      (version version)
+                      (supported-systems (list "riscv64-linux")))
      #:defconfig "win2030_defconfig"
      #:extra-version "rockos"
      #:source
