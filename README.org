@@ -12,3 +12,38 @@ More development boards will be supported in the future.
 We will upstream to guix what can be upstreamed to guix.
 
 *NOTE:* This channel may have binary blobs etc.
+
+* how to use
+add this channel
+add it to =~/.config/guix/channels.scm=:
+
+#+begin_src scheme
+  (cons* (channel
+          (name 'guix-riscv)
+          (url "https://github.com/z572/guix-riscv-channel.git")
+          (branch "main"))
+         %default-channels)
+#+end_src
+
+Then run =guix pull=.
+
+** megrez
+
+*** build
+#+begin_src shell
+guix system image -s riscv64-linux --expression='(@ (riscv system images megrez) megrez-barebones-raw-image)'
+#+end_src
+#+RESULTS:
+=/gnu/store/...-megrez-barebones-raw-image=
+
+Then you can flash the storage device and install it on megrez.
+
+* substitutes
+see [[https://guix.gnu.org/manual/devel/zh-cn/html_node/Getting-Substitutes-from-Other-Servers.html]]
+
+#+begin_src scheme
+  (public-key 
+   (ecc 
+    (curve Ed25519)
+    (q #166927E5E329B2AF7E965A4AE07403B69177EB0B8556D3467A83E0BE5E3D27F9#)))
+#+end_src
