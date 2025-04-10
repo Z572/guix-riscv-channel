@@ -38,6 +38,27 @@ guix system image -s riscv64-linux --expression='(@ (riscv system images megrez)
 
 Then you can flash the storage device and install it on megrez.
 
+*** how to use amdgpu
+
+add [[https://gitlab.com/nonguix/nonguix][nonguix]] channel.
+#+begin_src scheme
+  (use-modules (nongnu packages linux))
+  ...
+  (operating-system
+    (inherit megrez-barebones-os)
+    (kernel-arguments
+     (append (list "earlycon" "clk_ignore_unused")
+             (list "initcall_blacklist=es_drm_init"
+                   "pcie_port_pm=off"
+                   "pcie_aspm.policy=performance"
+                   "module_blacklist=pvrsrvkm")))
+    (firmware (cons* linux-firmware %base-firmware))
+    ...)
+
+#+end_src
+
+see [[https://rockos-riscv.github.io/rockos-docs/en/docs/faq/#no-video-output-on-dgpu]]
+
 ** visionfive2/Milk-V Mars
 guix is ​​officially supported
 
