@@ -133,6 +133,42 @@
   #:use-module (ice-9 regex))
 
 ;; no test
+(define-public u-boot-light-lpi4a
+  (let ((base (make-u-boot-package
+               "light_lpi4a"
+               "riscv64-linux-gnu"
+               #:configs '("# CONFIG_DDR_PRBS_TEST is not set"
+                           "# CONFIG_VIDEO_LCD_ILITEK_ILI9881C is not set"
+                           "# CONFIG_VIDEO_LCD_CUSTOM_LOGO is not set"))))
+    (package
+      (inherit base)
+      (version "20250110")
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/revyos/thead-u-boot")
+                      (commit version)))
+                (file-name (git-file-name "u-boot-thead" version))
+                (sha256
+                 (base32
+                  "1j843w189mv5kcx17ylk58vsw7jajly09ddavs521mpvgmrrlyqa"))
+                (modules '((guix build utils)))
+                (snippet #~(begin (substitute* "configs/light_lpi4a_defconfig"
+                                    (("#CONFIG_VIDEO_LCD_CUSTOM_LOGO=y") ""))))))
+      (arguments
+       (substitute-keyword-arguments (package-arguments base)
+         ((#:phases phases)
+          #~(modify-phases #$phases
+              (add-after 'unpack 'set-environment
+                (lambda* (#:key inputs #:allow-other-keys)
+                  (setenv
+                   "OPENSBI"
+                   (search-input-file inputs "fw_dynamic.bin"))))))))
+      (inputs
+       (modify-inputs (package-inputs base)
+         (append opensbi-generic))))))
+
+;; no test
 (define-public u-boot-eic7700-milkv-megrez
   (let ((base (make-u-boot-package
                "eic7700_milkv_megrez" "riscv64-linux-gnu"))
