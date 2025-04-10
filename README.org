@@ -63,7 +63,6 @@ add [[https://gitlab.com/nonguix/nonguix][nonguix]] channel.
 see [[https://rockos-riscv.github.io/rockos-docs/en/docs/faq/#no-video-output-on-dgpu]]
 
 ** visionfive2/Milk-V Mars
-guix is ​​officially supported
 
 *** build
 
