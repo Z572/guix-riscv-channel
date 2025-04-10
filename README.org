@@ -38,6 +38,22 @@ guix system image -s riscv64-linux --expression='(@ (riscv system images megrez)
 
 Then you can flash the storage device and install it on megrez.
 
+** visionfive2/Milk-V Mars
+guix is ​​officially supported
+
+*** build
+
+#+begin_src shell
+  guix system image -s riscv64-linux --expression='(@ (gnu system images visionfive2) visionfive2-barebones-raw-image)'
+#+end_src
+or see https://ci.guix.gnu.org/search/latest?query=spec:images+status:success+system:x86_64-linux+visionfive2-barebones-raw-image
+(this is a cross-compilation image).
+
+
+* separate guix package manager
+
+https://ci.z572.online/search/latest/archive?query=spec:guix-binary+status:success+system:riscv64-linux+guix-binary.tar.xz
+
 * substitutes
 see [[https://guix.gnu.org/manual/devel/zh-cn/html_node/Getting-Substitutes-from-Other-Servers.html]]
 
