@@ -28,6 +28,9 @@ add it to =~/.config/guix/channels.scm=:
 Then run =guix pull=.
 
 ** megrez
+use rockos kernel
+
+maybe support hifive-premier-p550/pine64-starpro64, but I don't have the hardware :(.
 
 *** build
 #+begin_src shell
