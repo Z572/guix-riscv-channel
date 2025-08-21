@@ -18,7 +18,6 @@
   #:use-module (gnu packages check)
   #:use-module (gnu packages cpio)
   #:use-module (gnu packages cpp)
-  #:use-module (gnu packages crates-io)
   #:use-module (gnu packages crypto)
   #:use-module (gnu packages cryptsetup)
   #:use-module (gnu packages compression)
