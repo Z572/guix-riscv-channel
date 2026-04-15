@@ -1,4 +1,5 @@
 (define-module (riscv packages bootloaders)
+  #:use-module (riscv packages firmware)
   #:use-module (gnu packages)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages acl)
@@ -165,6 +166,45 @@
                    (search-input-file inputs "fw_dynamic.bin"))))))))
       (inputs
        (modify-inputs (package-inputs base)
+         (append opensbi-generic))))))
+
+(define-public u-boot-th1520-lpi4a
+  (let ((base
+         (package-with-extra-patches
+          (make-u-boot-package
+           "th1520_lpi4a" "riscv64-linux-gnu"
+           #:configs
+           '("CONFIG_SYS_CBSIZE=1024"
+             "CONFIG_BOOTSTD=y"
+             "CONFIG_BOOTSTD_DEFAULTS=y"
+             "CONFIG_BOOTSTD_FULL=y"
+             "CONFIG_BOOTCOMMAND=\"bootflow scan -lb\""))
+          (list
+           (local-file
+            (string-append
+             (dirname (current-filename))
+             "/patches/u-boot-th1520-lpi4a-add-default-settings.patch"))))))
+    (package
+      (inherit base)
+      (arguments
+       (substitute-keyword-arguments arguments
+         ((#:phases phases)
+          #~(modify-phases #$phases
+              (add-after 'unpack 'set-environment
+                (lambda* (#:key inputs #:allow-other-keys)
+                  (setenv "OPENSBI"
+                          (search-input-file inputs "fw_dynamic.bin"))))
+              (add-after 'unpack 'add-firmware
+                (lambda* (#:key native-inputs inputs #:allow-other-keys)
+                  (copy-recursively
+                   (search-input-file (or native-inputs inputs)
+                                      "/share/firmware/th1520-ddr-firmware.bin")
+                   "th1520-ddr-firmware.bin")))))))
+      (native-inputs
+       (modify-inputs native-inputs
+         (append th1520-firmware)))
+      (inputs
+       (modify-inputs inputs
          (append opensbi-generic))))))
 
 ;; no test

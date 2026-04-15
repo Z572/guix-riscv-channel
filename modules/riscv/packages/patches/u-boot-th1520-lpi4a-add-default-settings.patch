@@ -1,0 +1,29 @@
+From dc50944f76deaab82dbf0f71fce38c28825d5de8 Mon Sep 17 00:00:00 2001
+From: Yao Zi <ziyao@disroot.org>
+Date: Thu, 10 Jul 2025 03:19:16 +0000
+Subject: [PATCH] DIRTY: configs: th1520_lpi4a: Add default IP and memory map
+ settings
+
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+---
+ include/configs/th1520_lpi4a.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/include/configs/th1520_lpi4a.h b/include/configs/th1520_lpi4a.h
+index 7a9b70a3678d..4afb149ff212 100644
+--- a/include/configs/th1520_lpi4a.h
++++ b/include/configs/th1520_lpi4a.h
+@@ -18,6 +18,12 @@
+ /* Environment options */
+ 
+ #define CFG_EXTRA_ENV_SETTINGS \
+-	"PS1=[LPi4A]# \0"
++	"PS1=[LPi4A]# \0" \
++	"pxefile_addr_r=0x30000000\0" \
++	"serverip=192.168.114.51\0" \
++	"ipaddr=192.168.114.50\0" \
++	"kernel_addr_r=0x31000000\0" \
++	"ramdisk_addr_r=0x34000000\0" \
++	"fdt_addr_r=0x40000000\0"
+ 
+ #endif /* __TH1520_LPI4A_H */
