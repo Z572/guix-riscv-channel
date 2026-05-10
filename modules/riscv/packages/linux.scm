@@ -182,5 +182,6 @@
                  "CONFIG_ZRAM=m"
                  "CONFIG_MODULE_COMPRESS_ZSTD=y"
                  "CONFIG_MODULE_DECOMPRESS=y"
+                 "CONFIG_VSOCKETS=m"
 
                  "CONFIG_NUMA=y"))))
